@@ -5,16 +5,70 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <form>
-            <div id="contenedor">
+        <div id="contenedor">
+            <div>
                 <label>
-                    <input id="translationArea" placeholder="Escribe lo que desees encriptar">
+                    <input class="translationArea" id="textoNoEncriptado" placeholder="Escribe lo que desees encriptar">
                 </label>
                 <label>
-                    <input id="translationArea" placeholder="El resultado de la encriptacion se mostrara aqui!">
+                    <input class="translationArea" id="textoEncriptado" placeholder="El resultado de la encriptacion se mostrara aqui!">
                 </label>
             </div>
+            <div>
+                <button onclick=encriptar()()>ENCRIPTAR</button>
+                <button>DESENCRIPTAR</button>
+            </div>
+        </div>
+        <script>
+            const abecedarioAlphanumerico=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9"];
+            const llave={};
 
-        </form>
+            function crearLlave(listaDeElementos){
+                let numeroAleatorio;
+                let tamanoLista;
+
+                tamanoLista= listaDeElementos.length;
+                for(let i= 1; i < tamanoLista; i++){
+                    numeroAleatorio= Math.floor(Math.random() * tamanoLista);
+
+                    llave[ listaDeElementos[i] ]= listaDeElementos[numeroAleatorio]
+                }
+            }
+
+            function encriptar(){
+                let texto;
+                let textoEncriptado
+
+                texto = document.getElementById("textoNoEncriptado").value;
+
+                if( !texto ){
+                    return("");
+                }
+                crearLlave(abecedarioAlphanumerico);
+
+                textoEncriptado= encriptarTexto(texto);
+
+                if(textoEncriptado){
+                    document.getElementById("textoEncriptado").value= textoEncriptado;
+                }
+
+                return 1;
+            }
+
+            function encriptarTexto(texto){
+                let textoLength;
+                let encriptado="";
+                let letra;
+
+                textoLength= texto.length;
+                for(let i=0; i < textoLength; i++){
+                    letra= texto[i];
+
+                    encriptado += llave[letra];
+                }
+
+                return encriptado
+            }
+        </script>
     </body>
 </html>
